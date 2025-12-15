@@ -34,19 +34,30 @@ jobs:
       run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
     - name: Build with Gradle
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleRelease bundleRelease
 
     - name: Rename APK
       run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/athanalarm.apk
 
+    - name: Rename AAB
+      run: mv app/build/outputs/bundle/release/app-release.aab app/build/outputs/bundle/release/athanalarm.aab
+
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: athanalarm
+        name: athanalarm-apk
         path: app/build/outputs/apk/release/athanalarm.apk
+
+    - name: Upload AAB
+      uses: actions/upload-artifact@v4
+      with:
+        name: athanalarm-aab
+        path: app/build/outputs/bundle/release/athanalarm.aab
 
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: app/build/outputs/apk/release/athanalarm.apk
+        files: |
+          app/build/outputs/apk/release/athanalarm.apk
+          app/build/outputs/bundle/release/athanalarm.aab
