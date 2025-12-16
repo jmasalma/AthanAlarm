@@ -55,7 +55,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         mLocationObserver = new Observer<Location>() {
             @Override
             public void onChanged(@Nullable Location currentLocation) {
-                if (currentLocation == null || !isAdded() || getActivity() == null) return;
+                if (currentLocation == null) return;
 
                 final String latitude = Double.toString(currentLocation.getLatitude());
                 final String longitude = Double.toString(currentLocation.getLongitude());
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         mSensorReadingsObserver = new Observer<SensorData>() {
             @Override
             public void onChanged(@Nullable SensorData sensorReadings) {
-                if (sensorReadings == null || !isAdded() || getActivity() == null) return;
+                if (sensorReadings == null) return;
 
                 final String altitude = Float.toString(sensorReadings.getAltitude());
                 EditTextPreference altitudePref = (EditTextPreference) findPreference("altitude");
@@ -110,7 +110,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         mViewModel.getCalculationMethodIndex().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String calculationMethodIndex) {
-                if (!isAdded() || getActivity() == null) return;
                 ListPreference calculationMethodPref = findPreference("calculationMethodsIndex");
                 if (calculationMethodPref != null) {
                     calculationMethodPref.setValue(calculationMethodIndex);
