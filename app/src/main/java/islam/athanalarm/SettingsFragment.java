@@ -80,18 +80,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
                 // Update the UI preferences
                 EditTextPreference latitudePref = (EditTextPreference) findPreference("latitude");
-                latitudePref.setText(latitude);
-                updateSummary(latitudePref);
+                if (latitudePref != null) {
+                    latitudePref.setText(latitude);
+                    updateSummary(latitudePref);
+                }
 
                 EditTextPreference longitudePref = (EditTextPreference) findPreference("longitude");
-                longitudePref.setText(longitude);
-                updateSummary(longitudePref);
+                if (longitudePref != null) {
+                    longitudePref.setText(longitude);
+                    updateSummary(longitudePref);
+                }
 
                 syncEncryptedToUi();
                 updateSummaries();
             }
         };
-        mViewModel.getLocation().observeForever(mLocationObserver);
+        mViewModel.getLocation().observe(getViewLifecycleOwner(), mLocationObserver);
 
         mSensorReadingsObserver = new Observer<SensorData>() {
             @Override
@@ -113,7 +117,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 }
             }
         };
-        mViewModel.getSensorReadings().observeForever(mSensorReadingsObserver);
+        mViewModel.getSensorReadings().observe(getViewLifecycleOwner(), mSensorReadingsObserver);
 
         findPreference("lookupGPS").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
