@@ -1,54 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/settings">
+    <PreferenceCategory>
         <islam.athanalarm.ButtonPreference
             android:key="lookupGPS"
-            android:layout="@layout/button_preference_layout" />
+            android:layout="@layout/button_preference_layout"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:key="latitude"
             android:title="@string/latitude"
             android:inputType="numberDecimal|numberSigned"
-            android:defaultValue="43.67" />
+            android:defaultValue="43.67"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:key="longitude"
             android:title="@string/longitude"
             android:inputType="numberDecimal|numberSigned"
-            android:defaultValue="-79.417" />
+            android:defaultValue="-79.417"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:key="altitude"
             android:title="@string/altitude"
             android:inputType="numberDecimal"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:key="pressure"
             android:title="@string/pressure"
             android:inputType="numberDecimal"
-            android:defaultValue="1010" />
+            android:defaultValue="1010"
+            app:iconSpaceReserved="false" />
         <ListPreference
             android:key="calculationMethodsIndex"
             android:title="@string/calculation"
             android:summary="%s"
             android:entries="@array/calculation_methods"
-            android:entryValues="@array/calculation_methods_values" />
+            android:entryValues="@array/calculation_methods_values"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:key="beforePrayerNotification"
             android:title="@string/pre_alert_mins"
             android:summary="@string/minutes_0_to_disable"
             android:inputType="number"
-            android:defaultValue="15" />
+            android:defaultValue="15"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
     <Preference
         android:key="information"
         android:title="@string/information"
         android:summary="@string/information_text"
-        android:layout="@layout/custom_preference_layout" />
+        android:layout="@layout/custom_preference_layout"
+        app:iconSpaceReserved="false" />
 
     <Preference
         android:key="disclaimer"
         android:title="@string/disclaimer"
         android:summary="@string/disclaimer_text"
-        android:layout="@layout/custom_preference_layout" />
+        android:layout="@layout/custom_preference_layout"
+        app:iconSpaceReserved="false" />
 
 </PreferenceScreen>

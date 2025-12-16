@@ -75,8 +75,14 @@ public class PrayerTimeScheduler {
         } catch (NumberFormatException e) {
             // Ignore and use 0
         }
+        int beforePrayerNotification = 0;
+        try {
+            beforePrayerNotification = Integer.parseInt(settings.getString("beforePrayerNotification", "0"));
+        } catch (NumberFormatException e) {
+            // Ignore and use 0
+        }
         ScheduleData newScheduleData = ScheduleHandler.calculate(locationAstro, calculationMethodIndex, roundingTypeIndex, offsetMinutes);
-        ScheduleHandler.scheduleAlarms(context, newScheduleData);
+        ScheduleHandler.scheduleAlarms(context, newScheduleData, beforePrayerNotification);
         callback.accept(newScheduleData);
     }
 

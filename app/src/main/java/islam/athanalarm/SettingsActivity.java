@@ -1,13 +1,19 @@
 package islam.athanalarm;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+        setContentView(R.layout.activity_settings);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings_container, new SettingsFragment())
+                .commit();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("");
+        }
     }
 }

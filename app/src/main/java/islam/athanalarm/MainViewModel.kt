@@ -47,7 +47,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val masterKey = MasterKey.Builder(application, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
-    private val settings = EncryptedSharedPreferences.create(
+    val settings = EncryptedSharedPreferences.create(
         application,
         "secret_shared_prefs",
         masterKey,
@@ -78,6 +78,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val location: LiveData<Location> = _location
     private val _sensorReadings = MutableLiveData<SensorData>()
     val sensorReadings: LiveData<SensorData> = _sensorReadings
+    private val _calculationMethodIndex = MutableLiveData<String>()
+    val calculationMethodIndex: LiveData<String> = _calculationMethodIndex
 
     private lateinit var sensorDataObserver: (SensorData) -> Unit
     init {
@@ -109,6 +111,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         if (::sensorDataObserver.isInitialized) {
             sensorHandler.sensorData.removeObserver(sensorDataObserver)
+        }
+    }
+
+    fun updateCalculationMethod() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val latitude = settings.getString(KEY_LATITUDE, "0")?.toDouble() ?: 0.0
+                val longitude = settings.getString(KEY_LONGITUDE, "0")?.toDouble() ?: 0.0
+                PrayerTimeScheduler.getCountryCode(getApplication(), latitude, longitude).thenAccept { countryCode ->
+                    val calculationMethodIndex = PrayerTimeScheduler.getCalculationMethodIndex(countryCode)
+                    _calculationMethodIndex.postValue(calculationMethodIndex)
+                }
+            }
         }
     }
 

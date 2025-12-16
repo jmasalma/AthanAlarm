@@ -98,27 +98,8 @@ public class ScheduleHandler {
         return gmtOffset / 3600000.0;
     }
 
-    public static void scheduleAlarms(Context context, ScheduleData scheduleData) {
+    public static void scheduleAlarms(Context context, ScheduleData scheduleData, int beforePrayerNotificationTime) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        SharedPreferences settings;
-        try {
-            MasterKey masterKey = new MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-
-            settings = EncryptedSharedPreferences.create(
-                    context,
-                    "secret_shared_prefs",
-                    masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-
         String[] prayerNames = context.getResources().getStringArray(islam.athanalarm.R.array.prayer_names);
 
         for (int i = 0; i < scheduleData.schedule.length; i++) {
@@ -138,13 +119,6 @@ public class ScheduleHandler {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, prayerTime.getTimeInMillis(), pendingIntent);
 
             // Schedule before prayer notification
-            int beforePrayerNotificationTime = 0;
-            try {
-                beforePrayerNotificationTime = Integer.parseInt(settings.getString("beforePrayerNotification", "0"));
-            } catch (NumberFormatException e) {
-                // Ignore and use 0
-            }
-
             if (beforePrayerNotificationTime > 0) {
                 GregorianCalendar beforePrayerTime = (GregorianCalendar) prayerTime.clone();
                 beforePrayerTime.add(Calendar.MINUTE, -beforePrayerNotificationTime);
