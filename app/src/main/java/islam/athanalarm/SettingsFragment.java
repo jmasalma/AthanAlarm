@@ -43,7 +43,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new MainViewModel(requireActivity().getApplication());
+        mViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -122,6 +122,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             }
         };
         mViewModel.getSensorReadings().observe(getViewLifecycleOwner(), mSensorReadingsObserver);
+
+        mViewModel.getCalculationMethodIndex().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String calculationMethodIndex) {
+                ListPreference calculationMethodPref = findPreference("calculationMethodsIndex");
+                if (calculationMethodPref != null) {
+                    calculationMethodPref.setValue(calculationMethodIndex);
+                    updateListSummary(calculationMethodPref);
+                }
+            }
+        });
 
         findPreference("lookupGPS").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
@@ -221,18 +232,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     private void updateCalculationMethodSummary() {
-        ListPreference calculationMethodPref = (ListPreference) findPreference("calculationMethodsIndex");
-        if (calculationMethodPref.getValue() == null) {
+        ListPreference calculationMethodPref = findPreference("calculationMethodsIndex");
+        if (calculationMethodPref != null && calculationMethodPref.getValue() == null) {
             calculationMethodPref.setSummary("Detecting...");
-            PrayerTimeScheduler.getCountryCode(getActivity(), Double.parseDouble(mEncryptedSharedPreferences.getString("latitude", "0")), Double.parseDouble(mEncryptedSharedPreferences.getString("longitude", "0"))).thenAccept(countryCode -> {
-                String calculationMethodIndex = PrayerTimeScheduler.getCalculationMethodIndex(countryCode);
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> {
-                        calculationMethodPref.setValue(calculationMethodIndex);
-                        updateListSummary(calculationMethodPref);
-                    });
-                }
-            });
+            mViewModel.updateCalculationMethod();
         }
     }
 
