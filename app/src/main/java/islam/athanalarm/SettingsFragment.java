@@ -1,12 +1,12 @@
 package islam.athanalarm;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,11 +14,7 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,7 +22,7 @@ import java.util.Set;
 
 import islam.athanalarm.handler.SensorData;
 
-public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragmentCompat {
     final Set<String> PREFS_TO_UPDATE_SUMMARY = new HashSet<>(Arrays.asList(
             "latitude",
             "longitude",
@@ -37,8 +33,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     ));
     private SharedPreferences mEncryptedSharedPreferences;
     private MainViewModel mViewModel;
-    private Observer<Location> mLocationObserver;
-    private Observer<SensorData> mSensorReadingsObserver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +43,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         mEncryptedSharedPreferences = mViewModel.getSettings();
 
-        mLocationObserver = new Observer<Location>() {
+        mViewModel.getLocation().observe(getViewLifecycleOwner(), new Observer<Location>() {
             @Override
             public void onChanged(@Nullable Location currentLocation) {
                 if (currentLocation == null || !isAdded() || getActivity() == null) return;
@@ -60,52 +59,41 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 final String latitude = Double.toString(currentLocation.getLatitude());
                 final String longitude = Double.toString(currentLocation.getLongitude());
 
-                // Save to encrypted preferences
-                SharedPreferences.Editor editor = mEncryptedSharedPreferences.edit();
-                editor.putString("latitude", latitude);
-                editor.putString("longitude", longitude);
-                editor.apply();
-
                 // Update the UI preferences
-                EditTextPreference latitudePref = (EditTextPreference) findPreference("latitude");
+                EditTextPreference latitudePref = findPreference("latitude");
                 if (latitudePref != null) {
                     latitudePref.setText(latitude);
                     updateSummary(latitudePref);
                 }
 
-                EditTextPreference longitudePref = (EditTextPreference) findPreference("longitude");
+                EditTextPreference longitudePref = findPreference("longitude");
                 if (longitudePref != null) {
                     longitudePref.setText(longitude);
                     updateSummary(longitudePref);
                 }
-
-                syncEncryptedToUi();
-                updateSummaries();
             }
-        };
-        mViewModel.getLocation().observe(getViewLifecycleOwner(), mLocationObserver);
+        });
 
-        mSensorReadingsObserver = new Observer<SensorData>() {
+        mViewModel.getSensorReadings().observe(getViewLifecycleOwner(), new Observer<SensorData>() {
             @Override
             public void onChanged(@Nullable SensorData sensorReadings) {
                 if (sensorReadings == null || !isAdded() || getActivity() == null) return;
 
                 final String altitude = Float.toString(sensorReadings.getAltitude());
-                EditTextPreference altitudePref = (EditTextPreference) findPreference("altitude");
+                EditTextPreference altitudePref = findPreference("altitude");
                 if (altitudePref != null) {
                     altitudePref.setText(altitude);
                     updateSummary(altitudePref);
                 }
 
                 final String pressure = Float.toString(sensorReadings.getPressure());
-                EditTextPreference pressurePref = (EditTextPreference) findPreference("pressure");
+                EditTextPreference pressurePref = findPreference("pressure");
                 if (pressurePref != null) {
                     pressurePref.setText(pressure);
                     updateSummary(pressurePref);
                 }
             }
-        };
-        mViewModel.getSensorReadings().observe(getViewLifecycleOwner(), mSensorReadingsObserver);
+        });
 
         mViewModel.getCalculationMethodIndex().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -142,78 +130,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             e.printStackTrace();
         }
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Register listener on the UI (default) preferences
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-
-        // Sync from encrypted to UI preferences
-        syncEncryptedToUi();
-
-        updateSummaries();
-    }
-
-    private void syncEncryptedToUi() {
-        SharedPreferences uiPrefs = getPreferenceManager().getSharedPreferences();
-        SharedPreferences.Editor uiEditor = uiPrefs.edit();
-        for (String key : PREFS_TO_UPDATE_SUMMARY) {
-            String value = mEncryptedSharedPreferences.getString(key, null);
-            if (value != null) {
-                uiEditor.putString(key, value);
-            }
-        }
-        uiEditor.apply();
-    }
-
-    private void updateSummaries() {
-        // Summaries are based on the UI preferences
-        Map<String, ?> preferencesMap = getPreferenceManager().getSharedPreferences().getAll();
-        for (Map.Entry<String, ?> preferenceEntry : preferencesMap.entrySet()) {
-            if (PREFS_TO_UPDATE_SUMMARY.contains(preferenceEntry.getKey())) {
-                Preference pref = findPreference(preferenceEntry.getKey());
-                if (pref instanceof EditTextPreference) {
-                    updateSummary((EditTextPreference) pref);
-                }
-            }
-        }
-
-        // Update calculation method summary
         updateCalculationMethodSummary();
-    }
-
-    @Override
-    public void onPause() {
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-        super.onPause();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        // This is called when UI (default) preferences change
-        if (PREFS_TO_UPDATE_SUMMARY.contains(key)) {
-            Preference pref = findPreference(key);
-            if (pref instanceof EditTextPreference) {
-                updateSummary((EditTextPreference) pref);
-            } else if (pref instanceof ListPreference) {
-                updateListSummary((ListPreference) pref);
-            }
-            // Sync the change to encrypted preferences
-            SharedPreferences.Editor encryptedEditor = mEncryptedSharedPreferences.edit();
-            encryptedEditor.putString(key, sharedPreferences.getString(key, ""));
-            encryptedEditor.apply();
-
-            if (key.equals("latitude") || key.equals("longitude")) {
-                updateCalculationMethodSummary();
-            }
-
-        // Broadcast intent to update widget
-        Intent intent = new Intent(getActivity(), PrayerTimeReceiver.class);
-        intent.setAction(CONSTANT.ACTION_UPDATE_WIDGET);
-        getActivity().sendBroadcast(intent);
-        }
     }
 
     private void updateCalculationMethodSummary() {
