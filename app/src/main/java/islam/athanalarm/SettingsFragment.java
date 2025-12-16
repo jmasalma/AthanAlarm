@@ -1,5 +1,6 @@
 package islam.athanalarm;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -22,7 +23,7 @@ import java.util.Set;
 
 import islam.athanalarm.handler.SensorData;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     final Set<String> PREFS_TO_UPDATE_SUMMARY = new HashSet<>(Arrays.asList(
             "latitude",
             "longitude",
@@ -131,6 +132,58 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         updateCalculationMethodSummary();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        updateSummaries();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (PREFS_TO_UPDATE_SUMMARY.contains(key)) {
+            Preference pref = findPreference(key);
+            if (pref instanceof EditTextPreference) {
+                updateSummary((EditTextPreference) pref);
+            } else if (pref instanceof ListPreference) {
+                updateListSummary((ListPreference) pref);
+            }
+            // Sync the change to encrypted preferences
+            SharedPreferences.Editor encryptedEditor = mEncryptedSharedPreferences.edit();
+            encryptedEditor.putString(key, sharedPreferences.getString(key, ""));
+            encryptedEditor.apply();
+
+            if (key.equals("latitude") || key.equals("longitude")) {
+                updateCalculationMethodSummary();
+            }
+
+            // Broadcast intent to update widget
+            Intent intent = new Intent(getActivity(), PrayerTimeReceiver.class);
+            intent.setAction(CONSTANT.ACTION_UPDATE_WIDGET);
+            getActivity().sendBroadcast(intent);
+        }
+    }
+
+    private void updateSummaries() {
+        Map<String, ?> preferencesMap = getPreferenceManager().getSharedPreferences().getAll();
+        for (Map.Entry<String, ?> preferenceEntry : preferencesMap.entrySet()) {
+            if (PREFS_TO_UPDATE_SUMMARY.contains(preferenceEntry.getKey())) {
+                Preference pref = findPreference(preferenceEntry.getKey());
+                if (pref instanceof EditTextPreference) {
+                    updateSummary((EditTextPreference) pref);
+                } else if (pref instanceof ListPreference) {
+                    updateListSummary((ListPreference) pref);
+                }
+            }
+        }
     }
 
     private void updateCalculationMethodSummary() {
