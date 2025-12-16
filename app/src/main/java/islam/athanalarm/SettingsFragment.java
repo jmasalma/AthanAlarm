@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -132,6 +134,57 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
 
         updateCalculationMethodSummary();
+
+        // Set input type for numeric preferences
+        EditTextPreference latitudePref = findPreference("latitude");
+        if (latitudePref != null) {
+            latitudePref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                @Override
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                }
+            });
+        }
+
+        EditTextPreference longitudePref = findPreference("longitude");
+        if (longitudePref != null) {
+            longitudePref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                @Override
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                }
+            });
+        }
+
+        EditTextPreference altitudePref = findPreference("altitude");
+        if (altitudePref != null) {
+            altitudePref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                @Override
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                }
+            });
+        }
+
+        EditTextPreference pressurePref = findPreference("pressure");
+        if (pressurePref != null) {
+            pressurePref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                @Override
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                }
+            });
+        }
+
+        EditTextPreference beforePrayerNotificationPref = findPreference("beforePrayerNotification");
+        if (beforePrayerNotificationPref != null) {
+            beforePrayerNotificationPref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                @Override
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                }
+            });
+        }
     }
 
     @Override
