@@ -149,19 +149,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mViewModel != null) {
-            if (mLocationObserver != null) {
-                mViewModel.getLocation().removeObserver(mLocationObserver);
-            }
-            if (mSensorReadingsObserver != null) {
-                mViewModel.getSensorReadings().removeObserver(mSensorReadingsObserver);
-            }
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         // Register listener on the UI (default) preferences
@@ -239,10 +226,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             calculationMethodPref.setSummary("Detecting...");
             PrayerTimeScheduler.getCountryCode(getActivity(), Double.parseDouble(mEncryptedSharedPreferences.getString("latitude", "0")), Double.parseDouble(mEncryptedSharedPreferences.getString("longitude", "0"))).thenAccept(countryCode -> {
                 String calculationMethodIndex = PrayerTimeScheduler.getCalculationMethodIndex(countryCode);
-                requireActivity().runOnUiThread(() -> {
-                    calculationMethodPref.setValue(calculationMethodIndex);
-                    updateListSummary(calculationMethodPref);
-                });
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        calculationMethodPref.setValue(calculationMethodIndex);
+                        updateListSummary(calculationMethodPref);
+                    });
+                }
             });
         }
     }
