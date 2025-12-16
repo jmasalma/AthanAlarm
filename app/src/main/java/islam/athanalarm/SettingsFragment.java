@@ -41,10 +41,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     private Observer<SensorData> mSensorReadingsObserver;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel = new MainViewModel(requireActivity().getApplication());
+    }
+
+    @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
-
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         try {
             MasterKey masterKey = new MasterKey.Builder(requireActivity(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
