@@ -43,7 +43,7 @@
             android:title="@string/pre_alert_mins"
             android:summary="@string/minutes_0_to_disable"
             android:inputType="number"
-            android:defaultValue="15"
+            android:defaultValue="0"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 

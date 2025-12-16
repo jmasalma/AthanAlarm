@@ -38,20 +38,6 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-    <string-array name="before_prayer_notification_entries">
-        <item>@string/none</item>
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>@string/custom</item>
-    </string-array>
-    <string-array name="before_prayer_notification_values">
-        <item>0</item>
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>-1</item>
-    </string-array>
     <array name="hijri_months">
         <item>@string/month0</item>
         <item>@string/month1</item>
