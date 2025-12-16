@@ -50,23 +50,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
 
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-
-            mEncryptedSharedPreferences = EncryptedSharedPreferences.create(
-                    requireActivity(),
-                    "secret_shared_prefs",
-                    masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
-        } catch (GeneralSecurityException | IOException e) {
-            Log.e("SettingsFragment", "Failed to create encrypted shared preferences", e);
-            requireActivity().finish(); // Can't work without preferences
-            return;
-        }
+        mEncryptedSharedPreferences = mViewModel.getSettings();
 
         mLocationObserver = new Observer<Location>() {
             @Override
