@@ -1,10 +1,12 @@
 package islam.athanalarm;
 
 import android.content.Context;
-import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 public class ButtonPreference extends Preference {
 
@@ -17,9 +19,9 @@ public class ButtonPreference extends Preference {
     }
 
     @Override
-    protected void onBindView(View view) {
-        super.onBindView(view);
-        Button button = view.findViewById(R.id.button);
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
+        Button button = (Button) holder.findViewById(R.id.button);
         if (button != null) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
