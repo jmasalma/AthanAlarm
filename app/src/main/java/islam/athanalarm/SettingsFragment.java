@@ -1,27 +1,21 @@
 package islam.athanalarm;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
-
-import androidx.lifecycle.ViewModelProvider;
-
-import islam.athanalarm.handler.SensorData;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -30,7 +24,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+import islam.athanalarm.handler.SensorData;
+
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     final Set<String> PREFS_TO_UPDATE_SUMMARY = new HashSet<>(Arrays.asList(
             "latitude",
             "longitude",
@@ -45,19 +41,18 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     private Observer<SensorData> mSensorReadingsObserver;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.settings, rootKey);
 
-        mViewModel = new MainViewModel(getActivity().getApplication());
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         try {
-            MasterKey masterKey = new MasterKey.Builder(getActivity(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            MasterKey masterKey = new MasterKey.Builder(requireActivity(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                     .build();
 
             mEncryptedSharedPreferences = EncryptedSharedPreferences.create(
-                    getActivity(),
+                    requireActivity(),
                     "secret_shared_prefs",
                     masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
@@ -65,7 +60,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             );
         } catch (GeneralSecurityException | IOException e) {
             Log.e("SettingsFragment", "Failed to create encrypted shared preferences", e);
-            getActivity().finish(); // Can't work without preferences
+            requireActivity().finish(); // Can't work without preferences
             return;
         }
 
@@ -135,7 +130,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         });
 
         try {
-            String versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            String versionName = requireActivity().getPackageManager().getPackageInfo(requireActivity().getPackageName(), 0).versionName;
             String summary = getText(R.string.information_text).toString().replace("#", versionName);
             summary += "\n" + BuildConfig.GIT_VERSION + " (" + BuildConfig.BUILD_DATE + ")";
             findPreference("information").setSummary(summary);
@@ -236,7 +231,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             calculationMethodPref.setSummary("Detecting...");
             PrayerTimeScheduler.getCountryCode(getActivity(), Double.parseDouble(mEncryptedSharedPreferences.getString("latitude", "0")), Double.parseDouble(mEncryptedSharedPreferences.getString("longitude", "0"))).thenAccept(countryCode -> {
                 String calculationMethodIndex = PrayerTimeScheduler.getCalculationMethodIndex(countryCode);
-                getActivity().runOnUiThread(() -> {
+                requireActivity().runOnUiThread(() -> {
                     calculationMethodPref.setValue(calculationMethodIndex);
                     updateListSummary(calculationMethodPref);
                 });

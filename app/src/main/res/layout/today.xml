@@ -13,7 +13,6 @@
         android:id="@+id/label_fajr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -21,7 +20,6 @@
         android:id="@+id/fajr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -30,7 +28,6 @@
         android:id="@+id/label_sunrise"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -38,7 +35,6 @@
         android:id="@+id/sunrise"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -47,7 +43,6 @@
         android:id="@+id/label_dhuhr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -55,7 +50,6 @@
         android:id="@+id/dhuhr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -64,7 +58,6 @@
         android:id="@+id/label_asr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -72,7 +65,6 @@
         android:id="@+id/asr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -81,7 +73,6 @@
         android:id="@+id/label_maghrib"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -89,7 +80,6 @@
         android:id="@+id/maghrib"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -98,7 +88,6 @@
         android:id="@+id/label_ishaa"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -106,7 +95,6 @@
         android:id="@+id/ishaa"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -115,7 +103,6 @@
         android:id="@+id/label_next_fajr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
@@ -123,7 +110,6 @@
         android:id="@+id/next_fajr"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:typeface="monospace"
         android:background="@drawable/row_divider"
         android:gravity="center" />
 
