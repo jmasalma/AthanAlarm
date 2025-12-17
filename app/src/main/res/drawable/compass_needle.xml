@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Left side of the needle (dark green) -->
+    <path
+        android:fillColor="@color/colorPrimary"
+        android:strokeColor="@color/outline"
+        android:strokeWidth="1"
+        android:pathData="M 100,0 L 90,75 L 100,75 Z" />
+
+    <!-- Right side of the needle (light green) -->
+    <path
+        android:fillColor="@color/colorPrimaryContainer"
+        android:strokeColor="@color/outline"
+        android:strokeWidth="1"
+        android:pathData="M 100,0 L 110,75 L 100,75 Z" />
+
+    <!-- Outer circle of the base (transparent fill, gray stroke) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="@color/outline"
+        android:strokeWidth="1"
+        android:pathData="M 75,100 A 25,25 0 1,0 125,100 A 25,25 0 1,0 75,100 Z" />
+
+    <!-- Inner circle of the base (transparent fill, gray stroke) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="@color/outline"
+        android:strokeWidth="1"
+        android:pathData="M 95,100 A 5,5 0 1,0 105,100 A 5,5 0 1,0 95,100 Z" />
+</vector>
