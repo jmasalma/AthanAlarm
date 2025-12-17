@@ -16,7 +16,6 @@ public class App extends Application {
         sInstance.mPlayer.stop();
         sInstance.mPlayer = MediaPlayer.create(sInstance, resid);
         sInstance.mPlayer.setScreenOnWhilePlaying(true);
-        sInstance.mPlayer.start();
     }
 
     public static void stopMedia() {
@@ -27,7 +26,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        mPlayer = MediaPlayer.create(this, R.raw.bismillah);
+        mPlayer = new MediaPlayer();
         NotificationHelper.createNotificationChannel(this);
     }
 
