@@ -13,7 +13,7 @@
 
     <!-- Filled Circle -->
     <path
-        android:fillColor="#D8D8D8"
+        android:fillColor="#00000000"
         android:strokeColor="#000000"
         android:strokeWidth="1"
         android:pathData="M 0,416.555 A 27.284,27.284 0 1,1 54.568,416.555 A 27.284,27.284 0 1,1 0,416.555" />
