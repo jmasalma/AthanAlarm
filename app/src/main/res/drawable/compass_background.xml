@@ -1,0 +1,44 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="400dp"
+    android:viewportWidth="400"
+    android:viewportHeight="400">
+
+    <!-- Blue background circle -->
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M 200,200 m -200,0 a 200,200 0 1,1 400,0 a 200,200 0 1,1 -400,0" />
+
+    <!-- Center star (light blue) - created from two rotated squares -->
+    <group
+        android:pivotX="200"
+        android:pivotY="200"
+        android:rotation="45">
+        <path
+            android:fillColor="#42A5F5"
+            android:pathData="M 150,150 h 100 v 100 h -100 Z" />
+    </group>
+    <path
+        android:fillColor="#42A5F5"
+        android:pathData="M 150,150 h 100 v 100 h -100 Z" />
+
+    <!-- Direction Markers (White) -->
+    <group>
+        <!-- North Marker -->
+        <path
+            android:fillColor="@android:color/white"
+            android:pathData="M 195,20 l 5,10 l -10,0 Z" />
+        <!-- East Marker -->
+        <path
+            android:fillColor="@android:color/white"
+            android:pathData="M 380,195 l -10,5 l 0,-10 Z" />
+        <!-- South Marker -->
+        <path
+            android:fillColor="@android:color/white"
+            android:pathData="M 195,380 l 5,-10 l -10,0 Z" />
+        <!-- West Marker -->
+        <path
+            android:fillColor="@android:color/white"
+            android:pathData="M 20,195 l 10,5 l 0,-10 Z" />
+    </group>
+</vector>

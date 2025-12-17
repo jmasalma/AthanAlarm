@@ -49,7 +49,16 @@ public class QiblaCompassView extends View {
             compassNeedleDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
             compassNeedleDrawable.draw(canvas);
         }
-        compassBackground = BitmapFactory.decodeResource(getResources(), R.drawable.compass_background);
+
+        Drawable compassBackgroundDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.compass_background);
+        if (compassBackgroundDrawable != null) {
+            compassBackground = Bitmap.createBitmap(compassBackgroundDrawable.getIntrinsicWidth(),
+                    compassBackgroundDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(compassBackground);
+            compassBackgroundDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            compassBackgroundDrawable.draw(canvas);
+        }
+
         width = compassBackground.getWidth();
         height = compassBackground.getHeight();
         centre_x = width * 0.5f;
