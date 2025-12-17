@@ -4,39 +4,39 @@
     android:viewportWidth="400"
     android:viewportHeight="400">
 
-    <!-- Blue background circle -->
+    <!-- Green background circle -->
     <path
-        android:fillColor="#0D47A1"
+        android:fillColor="@color/colorPrimary"
         android:pathData="M 200,200 m -200,0 a 200,200 0 1,1 400,0 a 200,200 0 1,1 -400,0" />
 
-    <!-- Center star (light blue) - created from two rotated squares -->
+    <!-- Center star (light green) - created from two rotated squares -->
     <group
         android:pivotX="200"
         android:pivotY="200"
         android:rotation="45">
         <path
-            android:fillColor="#42A5F5"
+            android:fillColor="@color/colorPrimaryContainer"
             android:pathData="M 150,150 h 100 v 100 h -100 Z" />
     </group>
     <path
-        android:fillColor="#42A5F5"
+        android:fillColor="@color/colorPrimaryContainer"
         android:pathData="M 150,150 h 100 v 100 h -100 Z" />
 
-    <!-- Direction Markers (White) -->
+    <!-- Direction Markers -->
     <group>
-        <!-- North Marker -->
+        <!-- North Marker (Red) -->
         <path
-            android:fillColor="@android:color/white"
+            android:fillColor="#FF0000"
             android:pathData="M 195,20 l 5,10 l -10,0 Z" />
-        <!-- East Marker -->
+        <!-- East Marker (White) -->
         <path
             android:fillColor="@android:color/white"
             android:pathData="M 380,195 l -10,5 l 0,-10 Z" />
-        <!-- South Marker -->
+        <!-- South Marker (White) -->
         <path
             android:fillColor="@android:color/white"
             android:pathData="M 195,380 l 5,-10 l -10,0 Z" />
-        <!-- West Marker -->
+        <!-- West Marker (White) -->
         <path
             android:fillColor="@android:color/white"
             android:pathData="M 20,195 l 10,5 l 0,-10 Z" />
