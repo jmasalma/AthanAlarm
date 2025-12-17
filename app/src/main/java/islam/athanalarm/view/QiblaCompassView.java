@@ -6,8 +6,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.appcompat.content.res.AppCompatResources;
 
 import islam.athanalarm.R;
 
@@ -38,7 +41,14 @@ public class QiblaCompassView extends View {
     }
 
     private void initCompassView() {
-        compassNeedle = BitmapFactory.decodeResource(getResources(), R.drawable.compass_needle);
+        Drawable compassNeedleDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.compass_needle);
+        if (compassNeedleDrawable != null) {
+            compassNeedle = Bitmap.createBitmap(compassNeedleDrawable.getIntrinsicWidth(),
+                    compassNeedleDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(compassNeedle);
+            compassNeedleDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            compassNeedleDrawable.draw(canvas);
+        }
         compassBackground = BitmapFactory.decodeResource(getResources(), R.drawable.compass_background);
         width = compassBackground.getWidth();
         height = compassBackground.getHeight();
