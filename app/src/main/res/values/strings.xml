@@ -46,10 +46,6 @@
     <string name="extra_alerts">Extra Alerts</string>
     <string name="daylight_savings">Daylight Savings</string>
     <string name="populate_data">Populate data</string>
-    <string name="system_time_zone">System Time Zone</string>
-    <string name="gmt">GMT</string>
-    <string name="save">Save</string>
-    <string name="reset">Reset</string>
     <string name="calculation">Calculation</string>
     <string name="jafari">Jafari (Ithna Ashari)</string>
     <string name="north_america">Islamic Society of North America</string>
@@ -58,26 +54,17 @@
     <string name="egypt_survey">Egyptian General Authority of Survey</string>
     <string name="karachi_hanaf">Hanafi - Karachi University of Islamic Sciences</string>
     <string name="dubai">Dubai</string>
-    <string name="time_format">Time Format</string>
     <string name="clock_24_hour">24 Hour Clock</string>
     <string name="altitude">Altitude (m)</string>
     <string name="pressure">Pressure (hPa)</string>
     <string name="temperature">Temperature</string>
     <string name="degrees_celsius">°C</string>
-    <string name="rounding">Rounding</string>
     <string name="normal">Normal</string>
     <string name="special">Special</string>
     <string name="aggressive">Aggressive</string>
-    <string name="offset">Offset</string>
     <string name="minutes">minutes</string>
     <string name="minutes_0_to_disable">Minutes (0 to disable)</string>
     <string name="pre_alert_mins">Pre-Alert (Mins)</string>
-    <string name="language">Language</string>
-    <string name="theme">Theme</string>
-    <string name="brown">Brown</string>
-    <string name="dialog">Dialog</string>
-    <string name="green">Green</string>
-    <string name="light">Light</string>
     <string name="month0">Muharram</string>
     <string name="month1">Safar</string>
     <string name="month2">Rabi` al-awwal</string>
@@ -90,7 +77,6 @@
     <string name="month9">Shawwal</string>
     <string name="month10">Dhu al-Qi`dah</string>
     <string name="month11">Dhu al-Hijjah</string>
-    <string name="anno_hegirae">AH</string>
     <string-array name="prayer_names">
         <item>@string/fajr</item>
         <item>@string/sunrise</item>
