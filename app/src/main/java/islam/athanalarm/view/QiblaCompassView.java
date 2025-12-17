@@ -72,11 +72,10 @@ public class QiblaCompassView extends View {
         super.onDraw(canvas);
 
         Matrix rotateNeedle = new Matrix();
-        // The original code rotated by -directionQibla. We preserve this behavior.
-        rotateNeedle.postRotate(-directionQibla, compassNeedle.getWidth() * 0.5f, compassNeedle.getHeight());
+        // The needle is now designed with its pivot at the center.
+        rotateNeedle.postRotate(-directionQibla, compassNeedle.getWidth() * 0.5f, compassNeedle.getHeight() * 0.5f);
         // Center the needle's pivot point on the background's center point.
-        // The needle's pivot point is assumed to be at (width/2, height) from the asset.
-        rotateNeedle.postTranslate(centre_x - (compassNeedle.getWidth() * 0.5f), centre_y - compassNeedle.getHeight());
+        rotateNeedle.postTranslate(centre_x - (compassNeedle.getWidth() * 0.5f), centre_y - (compassNeedle.getHeight() * 0.5f));
 
         canvas.rotate(-directionNorth, centre_x, centre_y);
         canvas.drawBitmap(compassBackground, 0, 0, p);

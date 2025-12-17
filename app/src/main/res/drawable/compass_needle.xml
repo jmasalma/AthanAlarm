@@ -1,34 +1,34 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="55dp"
-    android:height="444dp"
-    android:viewportWidth="54.568"
-    android:viewportHeight="443.839">
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
 
-    <!-- Triangle Path -->
+    <!-- Left side of the needle (dark green) -->
     <path
-        android:fillColor="#D8D8D8"
+        android:fillColor="@color/colorPrimary"
         android:strokeColor="#000000"
         android:strokeWidth="1"
-        android:pathData="M 27.285,0.035 L 54.551,416.737 H 0.018 Z" />
+        android:pathData="M 100,20 L 90,100 L 100,100 Z" />
 
-    <!-- Filled Circle -->
+    <!-- Right side of the needle (light green) -->
     <path
-        android:fillColor="#00000000"
+        android:fillColor="@color/colorPrimaryContainer"
         android:strokeColor="#000000"
         android:strokeWidth="1"
-        android:pathData="M 0,416.555 A 27.284,27.284 0 1,1 54.568,416.555 A 27.284,27.284 0 1,1 0,416.555" />
+        android:pathData="M 100,20 L 110,100 L 100,100 Z" />
 
-    <!-- Line Path -->
-    <path
-        android:strokeColor="#000000"
-        android:strokeWidth="1"
-        android:pathData="M 27.276,0 L 27.291,389.281" />
-
-    <!-- Stroked Circle -->
+    <!-- Outer circle of the base (transparent fill) -->
     <path
         android:fillColor="#00000000"
         android:strokeColor="#000000"
         android:strokeWidth="1"
-        android:pathData="M 21.768,416.555 A 5.516,5.516 0 1,1 32.8,416.555 A 5.516,5.516 0 1,1 21.768,416.555" />
+        android:pathData="M 75,100 A 25,25 0 1,0 125,100 A 25,25 0 1,0 75,100 Z" />
 
+    <!-- Inner circle of the base (transparent fill) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#000000"
+        android:strokeWidth="1"
+        android:pathData="M 95,100 A 5,5 0 1,0 105,100 A 5,5 0 1,0 95,100 Z" />
 </vector>
