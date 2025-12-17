@@ -41,23 +41,8 @@ public class QiblaCompassView extends View {
     }
 
     private void initCompassView() {
-        Drawable compassNeedleDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.compass_needle);
-        if (compassNeedleDrawable != null) {
-            compassNeedle = Bitmap.createBitmap(compassNeedleDrawable.getIntrinsicWidth(),
-                    compassNeedleDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(compassNeedle);
-            compassNeedleDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            compassNeedleDrawable.draw(canvas);
-        }
-
-        Drawable compassBackgroundDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.compass_background);
-        if (compassBackgroundDrawable != null) {
-            compassBackground = Bitmap.createBitmap(compassBackgroundDrawable.getIntrinsicWidth(),
-                    compassBackgroundDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(compassBackground);
-            compassBackgroundDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            compassBackgroundDrawable.draw(canvas);
-        }
+        compassNeedle = getBitmapFromVectorDrawable(R.drawable.compass_needle);
+        compassBackground = getBitmapFromVectorDrawable(R.drawable.compass_background);
 
         width = compassBackground.getWidth();
         height = compassBackground.getHeight();
@@ -99,5 +84,18 @@ public class QiblaCompassView extends View {
         canvas.rotate(-directionNorth, centre_x, centre_y);
         canvas.drawBitmap(compassBackground, 0, 0, p);
         canvas.drawBitmap(compassNeedle, rotateNeedle, p);
+    }
+
+    private Bitmap getBitmapFromVectorDrawable(int drawableId) {
+        Drawable drawable = AppCompatResources.getDrawable(getContext(), drawableId);
+        if (drawable == null) {
+            return null;
+        }
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 }

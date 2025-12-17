@@ -6,7 +6,7 @@
 
     <!-- Green background circle -->
     <path
-        android:fillColor="@color/colorPrimary"
+        android:fillColor="#8ABF8B"
         android:pathData="M 200,200 m -200,0 a 200,200 0 1,1 400,0 a 200,200 0 1,1 -400,0" />
 
     <!-- Center star (light green) - created from two rotated squares -->
@@ -27,7 +27,7 @@
         <!-- North Marker (Red) -->
         <path
             android:fillColor="#FF0000"
-            android:pathData="M 195,20 l 5,10 l -10,0 Z" />
+            android:pathData="M 190,20 l 10,20 l -20,0 Z" />
         <!-- East Marker (White) -->
         <path
             android:fillColor="@android:color/white"

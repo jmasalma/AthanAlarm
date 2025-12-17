@@ -21,6 +21,8 @@ public class CompassHandler implements SensorEventListener {
 
     private final float[] mR = new float[9];
     private final float[] mOrientation = new float[3];
+    private float filteredAzimuth = 0f;
+    private static final float ALPHA = 0.15f;
 
     private final MutableLiveData<Float> mNorthDirection = new MutableLiveData<>();
 
@@ -59,8 +61,22 @@ public class CompassHandler implements SensorEventListener {
             SensorManager.getOrientation(mR, mOrientation);
             float azimuthInRadians = mOrientation[0];
             float azimuthInDegrees = (float) (Math.toDegrees(azimuthInRadians) + 360) % 360;
-            mNorthDirection.postValue(azimuthInDegrees);
+
+            filteredAzimuth = applyLowPassFilter(azimuthInDegrees, filteredAzimuth);
+
+            mNorthDirection.postValue(filteredAzimuth);
         }
+    }
+
+    private float applyLowPassFilter(float newValue, float oldValue) {
+        if (Math.abs(newValue - oldValue) > 180) {
+            if (oldValue > newValue) {
+                oldValue -= 360;
+            } else {
+                oldValue += 360;
+            }
+        }
+        return oldValue + ALPHA * (newValue - oldValue);
     }
 
     @Override
