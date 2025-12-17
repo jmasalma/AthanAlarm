@@ -12,6 +12,7 @@ https://github.com/jmasalma/AthanAlarm/releases/latest
 
 ```bash
 
+git checkout main
 git pull --prune
 latest_tag=$(git describe --abbrev=0 --tags)
 new_tag=$(echo "$latest_tag" | awk -F'.' -v OFS='.' '{$NF++; print $0}')
