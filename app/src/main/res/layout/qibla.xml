@@ -85,15 +85,63 @@
                 android:layout_height="wrap_content" android:text="''" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout android:orientation="horizontal"
-        android:layout_height="wrap_content" android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:paddingTop="5dp" android:paddingBottom="5dp"
         android:paddingStart="2dp" android:paddingEnd="2dp">
+
         <islam.athanalarm.view.QiblaCompassView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="fill|center" android:id="@+id/qibla_compass" />
-    </LinearLayout>
+            android:id="@+id/qibla_compass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill|center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N"
+            android:textColor="#FF0000"
+            android:layout_alignTop="@id/qibla_compass"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="45dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S"
+            android:textColor="@android:color/black"
+            android:layout_alignBottom="@id/qibla_compass"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="45dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E"
+            android:textColor="@android:color/black"
+            android:layout_alignEnd="@id/qibla_compass"
+            android:layout_centerVertical="true"
+            android:paddingEnd="45dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="W"
+            android:textColor="@android:color/black"
+            android:layout_alignStart="@id/qibla_compass"
+            android:layout_centerVertical="true"
+            android:paddingStart="45dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
     <LinearLayout android:orientation="vertical"
         android:layout_width="wrap_content" android:layout_height="match_parent"
         android:paddingStart="2dp" android:paddingEnd="2dp">
