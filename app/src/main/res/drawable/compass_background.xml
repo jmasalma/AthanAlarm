@@ -27,18 +27,22 @@
         <!-- North Marker (Red) -->
         <path
             android:fillColor="#FF0000"
-            android:pathData="M 190,20 l 10,20 l -20,0 Z" />
+            android:pathData="M 200,20 l 10,20 l -20,0 Z" />
         <!-- East Marker (White) -->
         <path
             android:fillColor="@android:color/white"
-            android:pathData="M 380,195 l -10,5 l 0,-10 Z" />
+            android:pathData="M 380,200 l -10,5 l 0,-10 Z" />
         <!-- South Marker (White) -->
         <path
             android:fillColor="@android:color/white"
-            android:pathData="M 195,380 l 5,-10 l -10,0 Z" />
+            android:pathData="M 200,380 l 5,-10 l -10,0 Z" />
         <!-- West Marker (White) -->
         <path
             android:fillColor="@android:color/white"
-            android:pathData="M 20,195 l 10,5 l 0,-10 Z" />
+            android:pathData="M 20,200 l 10,5 l 0,-10 Z" />
+        <!-- North Marker Text -->
+        <path
+            android:fillColor="#FF0000"
+            android:pathData="M 195,70 L 195,50 L 198,50 L 202,65 L 202,50 L 205,50 L 205,70 L 202,70 L 198,55 L 198,70 Z" />
     </group>
 </vector>
