@@ -10,10 +10,10 @@ public class SimpleDate {
 	int year;
 	
 	/**
-	 * TODO
-	 * @param day
-	 * @param month
-	 * @param year
+	 * Creates a SimpleDate with the specified day, month, and year.
+	 * @param day the day of the month
+	 * @param month the month (1-12)
+	 * @param year the year
 	 */
 	public SimpleDate(int day, int month, int year) {
 		this.day = day;
@@ -22,8 +22,8 @@ public class SimpleDate {
 	}
 		
 	/**
-	 * TODO
-	 * @param gCalendar
+	 * Creates a SimpleDate from a GregorianCalendar.
+	 * @param gCalendar the GregorianCalendar to convert
 	 */
 	public SimpleDate(GregorianCalendar gCalendar) {
 		this.day = gCalendar.get(GregorianCalendar.DATE);

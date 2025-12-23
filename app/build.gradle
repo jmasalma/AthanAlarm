@@ -8,10 +8,9 @@ android {
         buildConfig true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "1.5.8"
+        kotlinCompilerExtensionVersion "1.5.15"
     }
     compileSdk 34
-    compileSdkVersion 34
     defaultConfig {
         applicationId "islam.athanalarm"
         minSdkVersion 24
@@ -19,7 +18,7 @@ android {
         versionCode 116
         versionName "3.0"
         buildConfigField "String", "BUILD_DATE", "\"${new Date().toString()}\""
-        buildConfigField "String", "GIT_VERSION", "\"${'git describe --tags --abbrev=0'.execute().text.trim()}\""
+        buildConfigField "String", "GIT_VERSION", "\"unknown\""
     }
     signingConfigs {
         debug {
@@ -34,72 +33,71 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17 // Or 21 if using newer JDK
-        targetCompatibility JavaVersion.VERSION_17 // Or 21
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "17"
     }
-    packagingOptions {
-        doNotStrip "**/libandroidx.graphics.path.so"
+    packaging {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    
+    // AndroidX Core
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.5.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    def compose_version = "1.4.3"
-    // implementation "androidx.compose.ui:ui:$compose_version"
-    // implementation "androidx.compose.material:material:$compose_version"
-    // implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.7.2'
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-
-    // Core Compose BOM to keep versions aligned
-    implementation platform("androidx.compose:compose-bom:2024.09.00")  // pick the latest stable
-
-    // UI + Material
-    implementation "androidx.compose.ui:ui"
-    implementation "androidx.compose.material3:material3"
-    implementation "androidx.compose.ui:ui-tooling-preview"
-
-    // Navigation for Compose
-    implementation "androidx.navigation:navigation-compose:2.8.3"
-
-    // LiveData integration with Compose
-    implementation "androidx.compose.runtime:runtime-livedata"
-
-    // Tooling (debug only)
-    debugImplementation "androidx.compose.ui:ui-tooling"
-    debugImplementation "androidx.compose.ui:ui-test-manifest"
-
-    implementation "androidx.compose.material:material"
-    implementation "androidx.compose.material:material-icons-extended"
-    implementation "androidx.security:security-crypto:1.1.0-alpha06"
-    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
-    implementation "androidx.preference:preference-ktx:1.2.1"
-
+    
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.7'
+    
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    
+    // Compose BOM - manages all Compose library versions
+    implementation platform('androidx.compose:compose-bom:2024.12.01')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material:material'
+    implementation 'androidx.compose.material:material-icons-extended'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.activity:activity-compose:1.9.3'
+    implementation 'androidx.navigation:navigation-compose:2.8.4'
+    implementation 'androidx.compose.runtime:runtime-livedata'
+    
+    // Security & Preferences
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+    
+    // Calendar
+    implementation 'com.aminography:primecalendar:1.7.0'
+    
     // Testing
     testImplementation 'junit:junit:4.13.2'
-    testImplementation "androidx.arch.core:core-testing:2.2.0"
-    testImplementation 'org.mockito:mockito-core:4.5.1'
-    testImplementation 'org.mockito:mockito-inline:4.5.1'
-    testImplementation 'org.robolectric:robolectric:4.10.3'
-    testImplementation 'androidx.test.ext:junit:1.1.5'
-    testImplementation 'androidx.test:core:1.5.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform("androidx.compose:compose-bom:2024.09.00")
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
-    debugImplementation "androidx.compose.ui:ui-test-manifest"
-    implementation "com.aminography:primecalendar:1.7.0"
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+    testImplementation 'org.robolectric:robolectric:4.13'
+    testImplementation 'androidx.test.ext:junit:1.2.1'
+    testImplementation 'androidx.test:core:1.6.1'
+    
+    // Android Testing
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation platform('androidx.compose:compose-bom:2024.12.01')
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    
+    // Debug
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
 }
 
 project.afterEvaluate {
