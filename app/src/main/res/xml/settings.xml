@@ -51,14 +51,12 @@
         android:key="information"
         android:title="@string/information"
         android:summary="@string/information_text"
-        android:layout="@layout/custom_preference_layout"
         app:iconSpaceReserved="false" />
 
     <Preference
         android:key="disclaimer"
         android:title="@string/disclaimer"
         android:summary="@string/disclaimer_text"
-        android:layout="@layout/custom_preference_layout"
         app:iconSpaceReserved="false" />
 
 </PreferenceScreen>

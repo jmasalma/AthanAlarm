@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Material Design 3 Colors -->
     <color name="colorPrimary">#388E3C</color>
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorPrimaryContainer">#DCEFD9</color>
@@ -21,14 +22,10 @@
     <color name="outline">#73796F</color>
     <color name="white">#FFFFFF</color>
 
-    <!-- Old colors for compatibility -->
-    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <!-- Legacy compatibility colors -->
     <color name="colorAccent">@color/colorSecondary</color>
-    <color name="rowDivider">@color/outline</color>
-    <color name="selectedRow">@color/colorPrimaryContainer</color>
     <color name="navigationItemUnselected">@color/onSurfaceVariant</color>
+    
+    <!-- Widget colors -->
     <color name="widget_text_color">#FFFFFF</color>
-    <color name="widget_background_transparent">#00000000</color>
-    <color name="widget_background_solid">#80000000</color>
-    <color name="widget_highlight_color">#40FFFFFF</color>
 </resources>
