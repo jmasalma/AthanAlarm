@@ -39,28 +39,8 @@
     <string name="dubai">Dubai</string>
     
     <!-- Settings Options -->
-    <string name="sdefault">Default</string>
-    <string name="clock_24_hour">24 Hour Clock</string>
-    <string name="none">None</string>
-    <string name="normal">Normal</string>
-    <string name="special">Special</string>
-    <string name="aggressive">Aggressive</string>
     <string name="pre_alert_mins">Pre-Alert (Mins)</string>
     <string name="minutes_0_to_disable">Minutes (0 to disable)</string>
-    
-    <!-- Hijri Months -->
-    <string name="month0">Muharram</string>
-    <string name="month1">Safar</string>
-    <string name="month2">Rabi` al-awwal</string>
-    <string name="month3">Rabi` al-thani</string>
-    <string name="month4">Jumada al-awwal</string>
-    <string name="month5">Jumada al-thani</string>
-    <string name="month6">Rajab</string>
-    <string name="month7">Sha`aban</string>
-    <string name="month8">Ramadan</string>
-    <string name="month9">Shawwal</string>
-    <string name="month10">Dhu al-Qi`dah</string>
-    <string name="month11">Dhu al-Hijjah</string>
     
     <!-- Prayer Names Array -->
     <string-array name="prayer_names">

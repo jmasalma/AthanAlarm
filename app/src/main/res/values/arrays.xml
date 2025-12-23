@@ -18,38 +18,4 @@
         <item>5</item>
         <item>6</item>
     </string-array>
-    <array name="time_format">
-        <item>@string/sdefault</item>
-        <item>@string/clock_24_hour</item>
-    </array>
-    <string-array name="time_format_values">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-    <array name="rounding_types">
-        <item>@string/none</item>
-        <item>@string/normal</item>
-        <item>@string/special</item>
-        <item>@string/aggressive</item>
-    </array>
-    <string-array name="rounding_types_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-    <array name="hijri_months">
-        <item>@string/month0</item>
-        <item>@string/month1</item>
-        <item>@string/month2</item>
-        <item>@string/month3</item>
-        <item>@string/month4</item>
-        <item>@string/month5</item>
-        <item>@string/month6</item>
-        <item>@string/month7</item>
-        <item>@string/month8</item>
-        <item>@string/month9</item>
-        <item>@string/month10</item>
-        <item>@string/month11</item>
-    </array>
 </resources>
