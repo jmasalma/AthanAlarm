@@ -34,11 +34,21 @@ class QiblaCompass {
         }
 
         this.ctx = this.canvas.getContext('2d');
-        this.setupCanvas();
-        this.drawCompass();
+        
+        // Setup canvas with a slight delay to ensure proper sizing
+        setTimeout(() => {
+            this.setupCanvas();
+            this.drawCompass();
+        }, 100);
         
         // Add click handler to request permissions
         this.canvas.addEventListener('click', () => this.requestPermissions());
+        
+        // Add status click handler
+        const statusElement = document.getElementById('compass-status');
+        if (statusElement) {
+            statusElement.addEventListener('click', () => this.requestPermissions());
+        }
         
         return true;
     }
@@ -183,7 +193,12 @@ class QiblaCompass {
      * Draw the compass
      */
     drawCompass() {
-        if (!this.ctx) return;
+        if (!this.ctx || !this.canvas) return;
+
+        // Ensure canvas is properly sized
+        if (this.canvas.width === 0 || this.canvas.height === 0) {
+            this.setupCanvas();
+        }
 
         // Clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
