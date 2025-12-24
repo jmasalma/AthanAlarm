@@ -77,7 +77,11 @@ class AthanAlarmApp {
         // Settings panel
         const settingsBtn = document.querySelector('.settings-btn');
         if (settingsBtn) {
-            settingsBtn.addEventListener('click', () => this.toggleSettings());
+            settingsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.toggleSettings();
+            });
         }
 
         // Settings panel close (click outside)
@@ -172,6 +176,9 @@ class AthanAlarmApp {
                     window.qiblaCompass.setupCanvas();
                     window.qiblaCompass.drawCompass();
                 }, 100);
+                // Also try immediate draw
+                window.qiblaCompass.setupCanvas();
+                window.qiblaCompass.drawCompass();
             }
         }
     }
