@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athan Alarm - Prayer Times & Qibla</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/compass.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2E7D32">
+    <meta name="description" content="Islamic prayer times and Qibla direction finder">
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1R7TB87PT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-W1R7TB87PT');
+    </script>
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Athan Alarm</h1>
+            <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="showScreen('today')" data-screen="today">
+                📅 Today
+            </button>
+            <button class="nav-btn" onclick="showScreen('qibla')" data-screen="qibla">
+                🧭 Qibla
+            </button>
+        </nav>
+
+        <!-- Today Screen -->
+        <main class="screen active" id="today-screen">
+            <div class="hijri-date" id="hijri-date">Loading...</div>
+            <div class="prayer-times" id="prayer-times">
+                <div class="prayer-row" data-prayer="fajr">
+                    <span class="prayer-name">Fajr</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+                <div class="prayer-row" data-prayer="sunrise">
+                    <span class="prayer-name">Sunrise</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+                <div class="prayer-row" data-prayer="dhuhr">
+                    <span class="prayer-name">Dhuhr</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+                <div class="prayer-row" data-prayer="asr">
+                    <span class="prayer-name">Asr</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+                <div class="prayer-row" data-prayer="maghrib">
+                    <span class="prayer-name">Maghrib</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+                <div class="prayer-row" data-prayer="ishaa">
+                    <span class="prayer-name">Ishaa</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+                <div class="prayer-row" data-prayer="next-fajr">
+                    <span class="prayer-name">Next Fajr</span>
+                    <span class="prayer-time">--:--</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Qibla Screen -->
+        <main class="screen" id="qibla-screen">
+            <div class="location-info">
+                <div class="location-row">
+                    <span class="location-label">Latitude:</span>
+                    <span class="location-value" id="latitude">--°</span>
+                </div>
+                <div class="location-row">
+                    <span class="location-label">Longitude:</span>
+                    <span class="location-value" id="longitude">--°</span>
+                </div>
+                <div class="location-row">
+                    <span class="location-label">Qibla:</span>
+                    <span class="location-value" id="qibla-direction">--°</span>
+                </div>
+            </div>
+            
+            <div class="compass-container">
+                <canvas id="compass-canvas" width="300" height="300"></canvas>
+                <div class="compass-status" id="compass-status">
+                    Tap to enable compass
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-content">
+                <h3>Settings</h3>
+                
+                <div class="setting-group">
+                    <label for="calculation-method">Calculation Method:</label>
+                    <select id="calculation-method">
+                        <option value="0">Jafari (Ithna Ashari)</option>
+                        <option value="1" selected>Islamic Society of North America</option>
+                        <option value="2">Muslim World League</option>
+                        <option value="3">Umm Al-Qurra, Saudi Arabia</option>
+                        <option value="4">Egyptian General Authority of Survey</option>
+                        <option value="5">Hanafi - Karachi University</option>
+                        <option value="6">Dubai</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label for="manual-location">Manual Location:</label>
+                    <div class="location-inputs">
+                        <input type="number" id="manual-lat" placeholder="Latitude" step="0.000001">
+                        <input type="number" id="manual-lng" placeholder="Longitude" step="0.000001">
+                        <button onclick="setManualLocation()">Set</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <button onclick="getCurrentLocation()">📍 Get Current Location</button>
+                </div>
+
+                <div class="setting-group">
+                    <button onclick="toggleSettings()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p>Loading prayer times...</p>
+        </div>
+    </div>
+
+    <script src="js/prayer-times.js"></script>
+    <script src="js/qibla-compass.js"></script>
+    <script src="js/location-handler.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
