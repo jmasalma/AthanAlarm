@@ -25,9 +25,14 @@ class LocationHandler {
             this.currentLocation = this.settings.location;
             this.updateLocationDisplay();
             this.calculateAndUpdateTimes();
+            this.showLoading(false); // Ensure loading is hidden
         } else {
-            // Try to get current location
-            this.getCurrentLocation();
+            // Use default location immediately, then try to get current location
+            this.useDefaultLocation();
+            // Try to get current location in background
+            setTimeout(() => {
+                this.getCurrentLocation();
+            }, 1000);
         }
     }
 
@@ -123,6 +128,7 @@ class LocationHandler {
         this.updateLocationDisplay();
         this.calculateAndUpdateTimes();
         this.saveSettings();
+        this.showLoading(false); // Ensure loading is hidden
     }
 
     /**

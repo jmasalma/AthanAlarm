@@ -46,6 +46,12 @@ class AthanAlarmApp {
      * Initialize all components
      */
     initializeComponents() {
+        // Hide loading overlay initially
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.classList.remove('active');
+        }
+
         // Initialize location handler
         if (window.locationHandler) {
             window.locationHandler.init();

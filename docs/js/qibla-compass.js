@@ -35,7 +35,11 @@ class QiblaCompass {
 
         this.ctx = this.canvas.getContext('2d');
         
-        // Setup canvas with a slight delay to ensure proper sizing
+        // Setup canvas immediately
+        this.setupCanvas();
+        this.drawCompass();
+        
+        // Also setup with a delay to ensure proper sizing
         setTimeout(() => {
             this.setupCanvas();
             this.drawCompass();
